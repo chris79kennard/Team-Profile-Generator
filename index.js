@@ -98,4 +98,97 @@ function menuPrompt() {
     });
 }
 
+function addEngineer() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "engineerName",
+        message: "What is your team engineers name",
+        validate: validText,
+      },
+      {
+        type: "input",
+        name: "engineerId",
+        message: "What is the employee ID of your team engineer?",
+        validate: validNum,
+      },
+      {
+        type: "input",
+        name: "engineerEmail",
+        message: "What is the email for your team engineer",
+        validate: validText,
+      },
+      {
+        type: "input",
+        name: "engineerGithub",
+        message: "What is the github username of your team engineer",
+        validate: validText,
+      },
+    ])
+
+    .then((answers) => {
+      console.log(answers);
+      // * destructure the answers object.
+      const { engineerName, engineerId, engineerEmail, engineerOffice } =
+        answers;
+      // * create new instance of engineer class
+      const engineer = new Engineer(
+        engineerName,
+        engineerId,
+        engineerEmail,
+        engineerOffice
+      );
+      // * add manager to array
+      allOfMyTeam.push(engineer);
+      menuPrompt();
+    });
+}
+
+function addIntern() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "internName",
+        message: "What is your team interns name",
+        validate: validText,
+      },
+      {
+        type: "input",
+        name: "internId",
+        message: "What is the employee ID of your team intern?",
+        validate: validNum,
+      },
+      {
+        type: "input",
+        name: "internEmail",
+        message: "What is the email for your team intern",
+        validate: validText,
+      },
+      {
+        type: "input",
+        name: "internGithub",
+        message: "What is the github username of your team intern",
+        validate: validText,
+      },
+    ])
+
+    .then((answers) => {
+      console.log(answers);
+      // * destructure the answers object.
+      const { internName, internId, internEmail, internOffice } = answers;
+      // * create new instance of intern class
+      const intern = new intern(
+        internName,
+        internId,
+        internEmail,
+        internOffice
+      );
+      // * add manager to array
+      allOfMyTeam.push(intern);
+      menuPrompt();
+    });
+}
+
 managerPrompt();
