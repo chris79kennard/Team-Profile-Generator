@@ -168,8 +168,8 @@ function addIntern() {
       },
       {
         type: "input",
-        name: "internGithub",
-        message: "What is the github username of your team intern",
+        name: "interSchool",
+        message: "What school does or did your of your team intern attend",
         validate: validText,
       },
     ])
@@ -177,18 +177,73 @@ function addIntern() {
     .then((answers) => {
       console.log(answers);
       // * destructure the answers object.
-      const { internName, internId, internEmail, internOffice } = answers;
+      const { internName, internId, internEmail, internSchool } = answers;
       // * create new instance of intern class
       const intern = new intern(
         internName,
         internId,
         internEmail,
-        internOffice
+        internSchool
       );
       // * add manager to array
       allOfMyTeam.push(intern);
       menuPrompt();
     });
+}
+
+let name,
+  id,
+  email,
+  role,
+  additionMethod,
+  icon,
+  additiionalLable,
+  teamValueArray;
+
+function finalizeTeam() {
+  for (let teamMember of allOfMyTeam) {
+    name = teamMember.getName();
+    id = teamMember.getId();
+    email = teamMember.getEmail();
+    role = teamMember.getRole();
+
+    if (role === "Manager") {
+      additionMethod = teamMember.getOfficeNum();
+      additiionalLable = "Office Number: ";
+      icon = "coffee";
+    } else if (role === "Intern") {
+      additionMethod = teamMember.getSchool();
+      additiionalLable = "School: ";
+      icon = "gradation student";
+    } else if (role === "Engineer") {
+      additionMethod = teamMember.getGithub();
+      additiionalLable = "GitHub: ";
+      icon = "glasses";
+    }
+  }
+
+  giantTeamMemberObject = {
+    name: name,
+    id: id,
+    email: email,
+    role: role,
+    additionMethod: additionMethod,
+    additiionalLable: additiionalLable,
+    icon: icon,
+  };
+
+  teamValueArray.push(giantTeamMemberObject);
+
+  generateMyHTML(teamValueArray);
+}
+
+// todo Add functionality tomorrow
+function generateMyHTML() {}
+
+function creatHtmlDoc(text) {
+  fs.writeFile("index.html", text, (err) => {
+    err ? console.log(err) : console.log("Document Created!");
+  });
 }
 
 managerPrompt();
