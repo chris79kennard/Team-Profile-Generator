@@ -80,7 +80,7 @@ function menuPrompt() {
         message: "What do you want to do now?",
         choices: [
           "Add an engineer",
-          "Add an Intern",
+          "Add an intern",
           "I'm done building my team!",
         ],
       },
@@ -168,7 +168,7 @@ function addIntern() {
       },
       {
         type: "input",
-        name: "interSchool",
+        name: "internSchool",
         message: "What school does or did your of your team intern attend",
         validate: validText,
       },
@@ -179,7 +179,7 @@ function addIntern() {
       // * destructure the answers object.
       const { internName, internId, internEmail, internSchool } = answers;
       // * create new instance of intern class
-      const intern = new intern(
+      const intern = new Intern(
         internName,
         internId,
         internEmail,
@@ -191,14 +191,8 @@ function addIntern() {
     });
 }
 
-let name,
-  id,
-  email,
-  role,
-  additionMethod,
-  icon,
-  additiionalLable,
-  teamValueArray;
+let name, id, email, role, additionMethod, icon, additiionalLable;
+let teamValueArray = [];
 
 function finalizeTeam() {
   for (let teamMember of allOfMyTeam) {
@@ -210,15 +204,15 @@ function finalizeTeam() {
     if (role === "Manager") {
       additionMethod = teamMember.getOfficeNum();
       additiionalLable = "Office Number: ";
-      icon = "coffee";
+      icon = `<i class="fas fa-mug-hot"></i>`;
     } else if (role === "Intern") {
       additionMethod = teamMember.getSchool();
       additiionalLable = "School: ";
-      icon = "gradation student";
+      icon = `<i class="fas fa-user-graduate"></i>`;
     } else if (role === "Engineer") {
       additionMethod = teamMember.getGithub();
       additiionalLable = "GitHub: ";
-      icon = "glasses";
+      icon = `<i class="fas fa-glasses"></i>`;
     }
   }
 
@@ -237,10 +231,82 @@ function finalizeTeam() {
   generateMyHTML(teamValueArray);
 }
 
-// todo Add functionality tomorrow
-function generateMyHTML() {}
+let htmlString;
 
-function creatHtmlDoc(text) {
+function generateMyHTML() {
+  htmlString = `
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta name="Description" content="Enter your description here" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Title</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light mb-3">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Navbar</span>
+      </div>
+    </nav>
+    <div class="container d-flex flex-wrap justify-content-center mt-3">
+    `;
+  // giantTeamMemberObject = {
+  //   name: name,
+  //   id: id,
+  //   email: email,
+  //   role: role,
+  //   additionMethod: additionMethod,
+  //   additiionalLable: additiionalLable,
+  //   icon: icon,
+  // };
+
+  for (let element of teamValueArray) {
+    let additionalFinal;
+    if (element.role === "Engineer") {
+      additionalFinal = ` <a href="https://github.com/${element.additionMethod}">${element.additionMethod}</a>`;
+    } else {
+      additionalFinal = element.additionMethod;
+    }
+
+    let linkedEmail = `<a href="mailto: ${element.email}">${element.email}</a>"`;
+
+    htmlString = htmlString.concat(`
+    <div class="card" style="width: 24rem">
+    <div class="card-body">
+      <h5 class="card-title">${element.name}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">${element.icon} ${element.role}</h6>
+      <ul class="list-group">
+        <li class="list-group-item">${element.id}</li>
+        <li class="list-group-item">${linkedEmail}</li>
+        <li class="list-group-item">${element.additiionalLable} ${additionalFinal}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+`);
+  }
+  htmlString = htmlString.concat(
+    `<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    </body>
+    </html> `
+  );
+  createHtmlDoc(htmlString);
+}
+
+function createHtmlDoc(text) {
   fs.writeFile("index.html", text, (err) => {
     err ? console.log(err) : console.log("Document Created!");
   });
