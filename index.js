@@ -130,14 +130,14 @@ function addEngineer() {
     .then((answers) => {
       console.log(answers);
       // * destructure the answers object.
-      const { engineerName, engineerId, engineerEmail, engineerOffice } =
+      const { engineerName, engineerId, engineerEmail, engineerGithub } =
         answers;
       // * create new instance of engineer class
       const engineer = new Engineer(
         engineerName,
         engineerId,
         engineerEmail,
-        engineerOffice
+        engineerGithub
       );
       // * add manager to array
       allOfMyTeam.push(engineer);
@@ -185,7 +185,7 @@ function addIntern() {
         internEmail,
         internSchool
       );
-      // * add manager to array
+      // * add intern to array
       allOfMyTeam.push(intern);
       menuPrompt();
     });
@@ -214,19 +214,17 @@ function finalizeTeam() {
       additiionalLable = "GitHub: ";
       icon = `<i class="fas fa-glasses"></i>`;
     }
+    giantTeamMemberObject = {
+      name: name,
+      id: id,
+      email: email,
+      role: role,
+      additionMethod: additionMethod,
+      additiionalLable: additiionalLable,
+      icon: icon,
+    };
+    teamValueArray.push(giantTeamMemberObject);
   }
-
-  giantTeamMemberObject = {
-    name: name,
-    id: id,
-    email: email,
-    role: role,
-    additionMethod: additionMethod,
-    additiionalLable: additiionalLable,
-    icon: icon,
-  };
-
-  teamValueArray.push(giantTeamMemberObject);
 
   generateMyHTML(teamValueArray);
 }
@@ -250,16 +248,16 @@ function generateMyHTML() {
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Title</title>
+    <link rel="stylesheet" href="dist/style.css" />
+    <title>Employee Generator</title>
   </head>
   <body>
     <nav class="navbar navbar-light bg-light mb-3">
       <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">Navbar</span>
+        <span class="navbar-brand mb-0 h1">My Team Builder</span>
       </div>
     </nav>
-    <div class="container d-flex flex-wrap justify-content-center mt-3">
+    <div id="team-cards" class="container d-flex flex-wrap justify-content-center align-items-center">
     `;
   // giantTeamMemberObject = {
   //   name: name,
@@ -279,16 +277,16 @@ function generateMyHTML() {
       additionalFinal = element.additionMethod;
     }
 
-    let linkedEmail = `<a href="mailto: ${element.email}">${element.email}</a>"`;
+    let linkedEmail = `<a href="mailto: ${element.email}">${element.email}</a>`;
 
     htmlString = htmlString.concat(`
-    <div class="card" style="width: 24rem">
+    <div class="card m-2" style="min-width: 24rem">
     <div class="card-body">
       <h5 class="card-title">${element.name}</h5>
       <h6 class="card-subtitle mb-2 text-muted">${element.icon} ${element.role}</h6>
       <ul class="list-group">
-        <li class="list-group-item">${element.id}</li>
-        <li class="list-group-item">${linkedEmail}</li>
+        <li class="list-group-item">Employee id: ${element.id}</li>
+        <li class="list-group-item">Employee Email: ${linkedEmail}</li>
         <li class="list-group-item">${element.additiionalLable} ${additionalFinal}</li>
       </ul>
     </div>

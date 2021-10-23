@@ -1,0 +1,54 @@
+body {
+  background-color: rgb(6, 9, 240);
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  background-color: rgb(25, 205, 250);
+  border: solid 1px;
+  box-shadow: rgb(151, 150, 150) 5px 5px 5px 3px;
+  /* border-radius: 25px; */
+  color: rgba(229, 245, 6, 0.986);
+}
+.card-title {
+  color: rgb(253, 57, 57);
+  font-weight: bold;
+}
+.navbar-light .navbar-brand {
+  color: rgb(0, 110, 255);
+  text-shadow: black 2px 2px 2px;
+  font-weight: bolder;
+  padding: 0px 700px;
+  /* background-color: black; */
+}
+
+/* .navbar-brand {
+  color: rgb(12, 11, 11);
+  padding: 0px 800px;
+} */
+
+.fas {
+  color: rgb(255, 230, 0);
+}
+
+.card-subtitle {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  color: red;
+}
+.list-group-item {
+  background-color: rgb(251, 253, 109);
+  color: black;
+  font-weight: bold;
+}
+
+.m-2 {
+  display: center;
+  /* display: grid;
+  display: block; */
+}
+
+.card {
+  display: center;
+}
